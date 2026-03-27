@@ -1,7 +1,7 @@
 # QDP-1: A Multi-Stage Framework for Detecting Quantum Spin Coherence in Radical Pair Systems
 
 **Brad Loomis, MS, PE, PTOE**
-Highpass Studio — Independent Research
+Independent Research
 
 ---
 
