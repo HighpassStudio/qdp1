@@ -11,6 +11,8 @@ We propose QDP-1, a seven-stage detection protocol for identifying quantum spin 
 
 **Keywords:** radical pair mechanism, quantum biology, zero-noise extrapolation, magnetoreception, detection protocol, spin coherence
 
+**Code availability:** Simulation code is available at https://github.com/HighpassStudio/qdp1
+
 ---
 
 ## 1. Introduction
