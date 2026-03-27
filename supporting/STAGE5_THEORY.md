@@ -28,20 +28,60 @@ This is the Laplace transform of rho(u) evaluated at s = d:
 The stretched exponential emerges when the inverse Laplace transform of
 exp[-(s/tau)^beta] yields a physically plausible rho(u) for disordered systems.
 
-## 2. The Rate Distribution rho(u)
+## 2. The Rate Distribution rho(u): Explicit Series Expansion
 
 The function phi(s) = exp[-(s/tau)^beta] with 0 < beta <= 1 has an inverse
 Laplace transform rho_beta(u) that is a positive, normalized density:
 
     exp[-(d/tau)^beta] = integral_0^inf rho_beta(u) exp(-u d) du
 
-For beta = 1: rho(u) = delta(u - 1/tau), recovering pure exponential.
+There is no elementary closed-form expression for rho(u), but there is a
+well-known explicit infinite series derived via term-by-term inversion of
+the Bromwich integral.
 
-For beta < 1: rho_beta(u) is a broad, asymmetric distribution with:
-- A peak at lower rates (slow-decaying components)
-- A long tail toward higher rates (fast-decaying components)
+### 2.1 Sine series (preferred for numerical evaluation)
 
-This corresponds to one-sided Levy-stable distributions for certain beta values.
+This form arises from the reflection formula of the Gamma function and is
+numerically stable:
+
+    rho_beta(u) = (1 / pi u) * sum_{n=1}^{inf} (-1)^{n-1} * (u^{n beta} / n!) * sin(pi n beta)
+
+For general scale tau:
+
+    rho(u; tau, beta) = (1/tau) * rho_beta(u/tau)
+
+### 2.2 Gamma-function series (Mainardi-function form)
+
+Equivalent form from direct series expansion of exp(-s^beta):
+
+    rho(u) = u^{-1} * sum_{n=1}^{inf} (-1)^n / (n! * Gamma(1 - n beta)) * u^{-n beta}
+
+The two series are mathematically identical (via Gamma(z) sin(pi z) = pi / Gamma(1-z))
+but the sine version is preferred in computation because it avoids poles of the
+Gamma function for integer n when beta is rational.
+
+### 2.3 Special case beta = 1
+
+When beta = 1, the sine terms vanish (sin(pi n) = 0 for all integer n) and the
+distribution collapses to the Dirac delta:
+
+    rho(u) -> delta(u - 1/tau)
+
+recovering the pure exponential decay C(d) = C_0 exp(-d/tau) derived in
+Section 1.
+
+### 2.4 Properties and convergence
+
+- rho(u) > 0 for all u > 0 and integrates to 1.
+- For beta < 1 the distribution is broad, asymmetric, and heavy-tailed
+  (slow components at small u, fast components at large u).
+- The series converges for any u > 0; practical truncation at n ~ 20-100
+  terms gives high accuracy (error < 10^{-10} is routine with double precision).
+- rho(u) corresponds to one-sided Levy-stable distributions for certain beta
+  values.
+- In the QDP-1 context, this rho(u) encodes the heterogeneous decoherence
+  typical of biological radical pairs (protein sub-states, solvent fluctuations,
+  nuclear-spin baths).
 
 ## 3. Physical Origin in Radical Pair Systems
 
