@@ -147,6 +147,62 @@ Since cos²θ = 0.5 + 0.5·cos(2θ), the radical pair signal concentrates power 
 
 **Scoring.** 1 point if exponential decay shape detected.
 
+#### 3.5.1 Theoretical Basis: Why Exponential Decay Is Expected
+
+The expectation that quantum spin coherence produces exponential (rather than linear) contrast decay under controlled decoherence follows from the standard open-quantum-system treatment of radical pair spin dynamics.
+
+A radical pair born in a spin-correlated singlet state undergoes coherent singlet-triplet interconversion driven by hyperfine and Zeeman interactions. The differential contrast C (the magnetic field effect) depends on the amplitude of these quantum beats surviving through the pair lifetime. In the closed-system limit, the singlet probability P_S(t) oscillates at frequencies set by hyperfine differences and Zeeman splitting — oscillations that are the direct signature of quantum coherence.
+
+Under Markovian dephasing (modeled via Lindblad operators acting on the spin density matrix), the off-diagonal elements of ρ responsible for singlet-triplet coherence decay as exp(−γt), where γ is the dephasing rate. When integrated against the pair survival probability exp(−k_eff · t), the time-averaged coherent modulation amplitude takes a Lorentzian-like form:
+
+    A(γ) ~ k_eff / (k_eff + γ)
+
+or, in the regime where dephasing dominates the envelope, approximately:
+
+    C(γ) ≈ C₀ · exp(−α γ)
+
+for a constant α related to the effective coherence time.
+
+Since the controlled decoherence parameter d in Stage 5 is designed to scale the physical dephasing rate linearly — γ(d) = γ₀ + c·d (e.g., paramagnetic ion concentration is proportional to relaxation rate) — substitution yields:
+
+    C(d) ≈ C₀ · exp(−β d)
+
+where β = α·c. This is the exponential decay predicted by the Lindblad treatment.
+
+For classical artifacts (detector drift, LED intensity scaling, field-independent chemical quenching), the contrast typically scales proportionally with the perturbation: C(d) ≈ C₀ − b·d (linear), because these processes act additively or multiplicatively on the signal amplitude without involving coherent superposition.
+
+#### 3.5.2 Extension: Stretched Exponential for Heterogeneous Systems
+
+The pure exponential derivation above assumes Markovian (memoryless) dephasing at a single rate γ. Real biological radical pairs embedded in proteins experience heterogeneous environments — conformational sub-states, fluctuating nuclear spin baths, multi-scale solvent dynamics — that produce a *distribution* of dephasing rates rather than a single value.
+
+When the rate distribution P(γ) is broad, the ensemble-averaged contrast becomes a Laplace transform over that distribution. For many disordered systems (including spin relaxation in organic radicals and proteins), this produces the Kohlrausch-Williams-Watts (KWW) stretched exponential:
+
+    C(d) = C₀ · exp[−(d / τ)^β]     where 0 < β ≤ 1
+
+The stretching exponent β encodes the degree of environmental heterogeneity:
+
+- **β = 1:** Pure exponential. Homogeneous Markovian dephasing. The simple case derived above.
+- **0.5 < β < 1:** Stretched exponential. Heterogeneous or non-Markovian decoherence — multiple relaxation channels with different timescales. Still a signature of coherence loss (the magnetic field effect requires singlet-triplet coherences), but with distributed character. Quantitative predictions of spin decoherence in radical systems yield β ≈ 0.7–0.9 in certain regimes.
+- **β → 0 or linear fit preferred:** No coherent decay structure. Consistent with classical artifact.
+
+Formally, the stretched exponential arises as the Laplace transform of the rate distribution: C(d)/C₀ = ∫₀^∞ ρ(u) exp(−u·d) du, where ρ(u) is the probability density of dephasing rates across the ensemble. When ρ(u) is a delta function (single rate), this yields pure exponential decay; when ρ(u) is broad (as expected in protein-embedded radical pairs with conformational sub-states and multi-channel relaxation), the integral produces the KWW stretched exponential. This connection means the shape of C(d) directly encodes information about the underlying distribution of decoherence pathways — a delta-like distribution yields β = 1, a broad distribution yields β < 1, and a non-Laplace form (linear) suggests classical scaling. The physical origins of rate heterogeneity in radical pair systems include non-Markovian dynamics from slow protein motions, nuclear spin diffusion, fluctuating hyperfine couplings, and multi-channel relaxation (random local fields + singlet-triplet dephasing + g-tensor anisotropy).
+
+**Proposed refinement for Stage 5.** Fit three models instead of two:
+
+    Linear:              C(d) = a − b·d
+    Exponential:         C(d) = a · exp(−k·d)
+    Stretched exp:       C(d) = a · exp[−(d/τ)^β]
+
+Use AIC (Akaike Information Criterion) or BIC (Bayesian Information Criterion) for model selection rather than raw ΔR², to properly penalize the extra parameter in the stretched exponential. The diagnostic then becomes:
+
+- Stretched exponential preferred with β ∈ [0.6, 1.0]: "quantum-consistent — coherent decay with heterogeneous decoherence"
+- Pure exponential preferred (β ≈ 1): "quantum-consistent — Markovian coherent decay"
+- Linear preferred: "classical-consistent — no coherent decay structure"
+
+This refinement is more physically grounded for real radical pair systems, where β < 1 is frequently observed in spin relaxation studies, and provides a continuous measure of "how quantum" the decay looks rather than a binary classification.
+
+**Important caveat (retained).** Even with the stretched exponential extension, the decay shape test remains supporting evidence, not standalone proof. Some classical processes with distributed kinetics (e.g., heterogeneous photobleaching in a complex sample) can also produce stretched exponential decay. The multi-stage framework mitigates this — Stage 5 is one of seven tests, weighted at 1 point of 10.
+
 ### 3.6 Stage 6: Field-Strength Power Law (1 point)
 
 **Purpose.** Distinguish quantum radical pair response from classical magnetic effects using the scaling of contrast with field strength.
