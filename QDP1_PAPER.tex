@@ -16,7 +16,7 @@
 \date{\today}
 
 \begin{abstract}
-We propose QDP-1, a seven-stage detection protocol for identifying quantum spin coherence effects in radical pair systems under ambient conditions. The framework makes two methodological contributions: (1)~it unifies angular dependence testing, field-strength power-law discrimination, temperature-dependent coherence scaling, and negative control gating into a single scored detection framework for radical pair systems; and (2)~it proposes adapting zero-noise extrapolation (ZNE), a proven error-mitigation technique from quantum computing, as a diagnostic fingerprint for distinguishing coherent spin dynamics from classical behavior--though this component remains a hypothesis awaiting theoretical grounding and experimental validation. The protocol borrows structural elements from particle physics discovery criteria (5$\sigma$ thresholds, control gating) and clinical trial methodology (staged evidence, artifact elimination). We validate QDP-1 in simulation across four radical pair candidate systems and one known-negative control (a non-radical-pair fluorophore), demonstrating that the protocol differentiates between systems and that the control gate correctly caps verdicts when artifact contamination is present. The ZNE diagnostic (Stage~5) is proposed but not yet validated: the simulation's decoherence proxy does not produce the exponential decay signature the stage is designed to detect, and experimental validation with physical decoherence mechanisms is required. No existing framework in the quantum biology literature unifies these elements into a single system-agnostic protocol. QDP-1 is validated in simulation only; experimental validation is needed. Simulation code is available at \url{https://github.com/HighpassStudio/qdp1}.
+We propose QDP-1, a eight-stage detection protocol for identifying quantum spin coherence effects in radical pair systems under ambient conditions. The framework makes two methodological contributions: (1)~it unifies angular dependence testing, field-strength power-law discrimination, temperature-dependent coherence scaling, and negative control gating into a single scored detection framework for radical pair systems; and (2)~it proposes adapting zero-noise extrapolation (ZNE), a proven error-mitigation technique from quantum computing, as a diagnostic fingerprint for distinguishing coherent spin dynamics from classical behavior--though this component remains a hypothesis awaiting theoretical grounding and experimental validation. The protocol borrows structural elements from particle physics discovery criteria (5$\sigma$ thresholds, control gating) and clinical trial methodology (staged evidence, artifact elimination). We validate QDP-1 in simulation across four radical pair candidate systems and one known-negative control (a non-radical-pair fluorophore), demonstrating that the protocol differentiates between systems and that the control gate correctly caps verdicts when artifact contamination is present. The ZNE diagnostic (Stage~5) is proposed but not yet validated: the simulation's decoherence proxy does not produce the exponential decay signature the stage is designed to detect, and experimental validation with physical decoherence mechanisms is required. No existing framework in the quantum biology literature unifies these elements into a single system-agnostic protocol. QDP-1 is validated in simulation only; experimental validation is needed. Simulation code is available at \url{https://github.com/HighpassStudio/qdp1}.
 \end{abstract}
 
 \keywords{radical pair mechanism, quantum biology, zero-noise extrapolation, magnetoreception, detection protocol, spin coherence}
@@ -39,7 +39,7 @@ Despite this progress, the field lacks a unified detection framework. Individual
 \item \textbf{No system-agnostic protocol.} Each new radical pair candidate is evaluated with ad hoc methods. A reusable detection kit would accelerate the field.
 \end{enumerate}
 
-QDP-1 addresses these gaps by combining seven partially independent tests into a scored verdict with explicit control gating. The protocol is designed to be applied identically to any radical pair system, with each application constituting an independent experimental contribution. This work is intended as a starting point for community evaluation and refinement.
+QDP-1 addresses these gaps by combining eight partially independent tests into a scored verdict with explicit control gating. The protocol is designed to be applied identically to any radical pair system, with each application constituting an independent experimental contribution. This work is intended as a starting point for community evaluation and refinement.
 
 \subsection{Scope}
 
@@ -69,7 +69,7 @@ QDP-1 unifies ZNE-style noise scaling (adapted from quantum computing), Fourier 
 
 \section{Methods: The QDP-1 Protocol}
 
-QDP-1 consists of seven stages, each contributing a weighted score to a final verdict. Stage~3 (negative controls) serves as a gate: if controls fail, the final verdict is capped regardless of total score. The protocol requires a fluorescence-based readout of radical pair reaction yield as a function of applied magnetic field angle and strength.
+QDP-1 consists of eight stages, each contributing a weighted score to a final verdict. Stage~3 (negative controls) serves as a gate: if controls fail, the final verdict is capped regardless of total score. The protocol requires a fluorescence-based readout of radical pair reaction yield as a function of applied magnetic field angle and strength.
 
 \subsection{Stage 1: Baseline Noise Characterization (1 point)}
 
@@ -112,9 +112,9 @@ where $S_A$, $S_B$ are summed photon counts at each angle.
 \item C3: Killed radical pair (radical scavenger or denatured protein). Tests whether the signal requires the spin-correlated radical pair.
 \end{itemize}
 
-\textbf{Decision.} Each control must show $Z < 2.0$. Any control with $Z > 3.0$ flags artifact contamination.
+\textbf{Decision.} Each control must show $Z < 2.0$ (pass). $2.0 \leq Z \leq 3.0$ is indeterminate: the control neither passes nor fails, but the stage scores 1 point instead of 2 and the run should be flagged for replication. $Z > 3.0$ is a hard fail: artifact contamination is present and the gate activates.
 
-\textbf{Scoring.} 2 points if all controls pass. 0 points if any control fails. Gate: failure caps verdict.
+\textbf{Scoring.} 2 points if all controls pass ($Z < 2.0$). 1 point if any control is indeterminate ($2.0 \leq Z \leq 3.0$) but none fail. 0 points if any control fails ($Z > 3.0$). Gate: failure caps verdict.
 
 \subsection{Stage 4: Angular Shape via Fourier Decomposition (2 points)}
 
@@ -128,55 +128,58 @@ P_2 &= a_2^2 + b_2^2
 \end{align}
 Since $\cos^2\theta = 0.5 + 0.5\cos(2\theta)$, the radical pair signal concentrates power in the $2\theta$ Fourier component.
 
-\textbf{Decision.} Power ratio $P_2 / \text{total variance} > 0.5$ AND $F > 10$ for strong detection.
+\textbf{Statistics.} Define the total power as the sum over all non-DC Fourier components: $P_\text{total} = \sum_{k=1}^{N/2} (a_k^2 + b_k^2)$. The power ratio is $R_2 = P_2 / P_\text{total}$. The $F$-statistic tests whether the $2\theta$ component explains significantly more variance than expected under a flat (noise-only) null model: $F = P_2 / (P_\text{total} - P_2) \times (N/2 - 1)$, with 2 and $N - 3$ degrees of freedom.
+
+\textbf{Decision.} Power ratio $R_2 > 0.5$ AND $F > 10$ (corresponding to $p < 0.001$ for $N = 24$) for strong detection.
 
 \textbf{Scoring.} 2 points if both criteria met. 1 point if either met alone.
 
-\subsection{Stage 5: Noise Decay Fingerprint--ZNE Diagnostic (1 point)}
+\subsection{Stage 5: Decoherence Decay Shape--ZNE-Inspired Diagnostic (1 point)}
 
-\textbf{Purpose.} Distinguish quantum coherence effects from classical artifacts using the shape of signal decay under controlled decoherence.
+\textbf{Purpose.} Characterize the functional form of signal decay under controlled decoherence perturbation, as supporting evidence for or against coherent spin dynamics.
 
-\textbf{Method.} Deliberately increase decoherence by controlled means (paramagnetic ions, temperature increase, or chemical modification). Measure differential contrast at decoherence levels $d = 0.0, 0.1, \ldots, 0.9$. Fit two models:
+\textbf{Method.} Deliberately increase decoherence by controlled means (paramagnetic ions, temperature increase, or chemical modification). Measure differential contrast at decoherence levels $d = 0.0, 0.1, \ldots, 0.9$. Fit three models:
 \begin{align}
 \text{Linear:} \quad & C(d) = a - b \cdot d \\
-\text{Exponential:} \quad & C(d) = a \cdot \exp(-k \cdot d)
+\text{Lorentzian:} \quad & C(d) = \frac{a}{1 + k \cdot d} \\
+\text{Stretched exponential:} \quad & C(d) = a \cdot \exp\left[-(d/\tau)^\beta\right]
 \end{align}
 
-\textbf{Rationale.} This adapts ZNE from quantum computing~\cite{temme2017,giurgica2020}. In standard ZNE, noise is deliberately amplified and the observable extrapolated to zero noise. Here, we repurpose the technique as a \emph{diagnostic}: the shape of the decay curve under increasing decoherence distinguishes quantum from classical behavior.
+\textbf{Rationale.} This is inspired by ZNE from quantum computing~\cite{temme2017,giurgica2020}, where noise is deliberately amplified and the observable extrapolated to zero noise. Here, we adapt the principle as a \emph{diagnostic}: the functional form of the decay curve under increasing decoherence differs between coherent spin dynamics and classical artifacts. However, we emphasize an important limitation: in quantum computing, noise can be amplified precisely via gate stretching. In biological systems, ``increasing decoherence'' via paramagnetic ions or temperature changes may simultaneously alter reaction kinetics, protein conformation, and radical pair lifetime. The controlled-parameter assumption is therefore approximate, and results from this stage must be interpreted cautiously.
 
-\textbf{Important caveat.} Exponential decay alone is not proof of quantum coherence. Some classical processes (photobleaching, thermal relaxation) also produce exponential decay. This stage provides supporting evidence, not standalone proof. The scoring weight (1 point of 10) reflects this limitation.
+\textbf{Important caveats.} (1)~Non-linear decay alone is not proof of quantum coherence. Some classical processes (photobleaching, thermal relaxation) also produce non-linear decay. (2)~The decoherence perturbation may not cleanly separate spin dephasing from other chemical effects. This stage provides supporting evidence within the multi-stage framework, not standalone proof. The scoring weight (1 point) reflects these limitations.
 
-\textbf{Decision.} $R^2_\text{exp} - R^2_\text{lin} > 0.1$ indicates exponential (quantum-consistent) decay.
+\textbf{Decision.} Use AIC to select among the three models. If the Lorentzian or stretched exponential is selected over linear ($\Delta\text{AIC} > 4$), the decay is classified as ``non-linear (quantum-consistent).''
 
-\textbf{Scoring.} 1 point if exponential decay shape detected.
+\textbf{Scoring.} 1 point if non-linear decay shape is selected by AIC.
 
 \subsubsection{Theoretical Basis}
 
-Under Markovian dephasing modeled via Lindblad operators, the off-diagonal elements of the spin density matrix responsible for singlet-triplet coherence decay as $\exp(-\gamma t)$, where $\gamma$ is the dephasing rate. When integrated against the pair survival probability $\exp(-k_\text{eff} \cdot t)$, the time-averaged coherent modulation amplitude takes a Lorentzian-like form:
+Under Markovian dephasing modeled via Lindblad operators, the off-diagonal elements of the spin density matrix responsible for singlet-triplet coherence decay as $\exp(-\gamma t)$, where $\gamma$ is the dephasing rate. When integrated against the pair survival probability $\exp(-k_\text{eff} \cdot t)$, the time-averaged coherent modulation amplitude takes a Lorentzian form:
 \begin{equation}
 A(\gamma) \sim \frac{k_\text{eff}}{k_\text{eff} + \gamma}
 \end{equation}
 
 Since the controlled decoherence parameter $d$ scales the physical dephasing rate linearly--$\gamma(d) = \gamma_0 + c \cdot d$--the contrast follows:
 \begin{equation}
-C(d) \approx C_0 \cdot \exp(-\beta d)
+C(d) = \frac{C_0}{1 + \alpha d} \quad \text{where } \alpha = \frac{c}{k_\text{eff} + \gamma_0},\; C_0 = \frac{k_\text{eff}}{k_\text{eff} + \gamma_0}
 \end{equation}
-where $\beta = \alpha c$. For classical artifacts, the contrast typically scales proportionally: $C(d) \approx C_0 - b \cdot d$ (linear).
+
+This Lorentzian decay is the correct functional form for a homogeneous radical pair system under controlled dephasing. For small perturbations ($\alpha d \ll 1$), the Lorentzian approximates $C_0(1 - \alpha d)$, which is linear--meaning the quantum and classical signatures converge in the weak-perturbation limit and are distinguishable only when $\alpha d$ is of order unity or larger. This places a practical requirement on Stage~5: the decoherence perturbation range must be large enough to enter the non-linear regime. For classical artifacts that scale proportionally with the perturbation (e.g., field-proportional detector coupling), the decay remains linear across the full range.
 
 \subsubsection{Extension: Stretched Exponential for Heterogeneous Systems}
 
 Real biological radical pairs embedded in proteins experience heterogeneous environments that produce a \emph{distribution} of dephasing rates. When the rate distribution $\rho(u)$ is broad, the ensemble-averaged contrast becomes:
 \begin{equation}
-\frac{C(d)}{C_0} = \int_0^\infty \rho(u) \exp(-u \cdot d) \, du
+\frac{C(d)}{C_0} = \int_0^\infty \rho(u) \frac{1}{1 + u \cdot d} \, \rho(u) \, du
 \end{equation}
-which is the Laplace transform of $\rho(u)$. For many disordered systems, this produces the Kohlrausch-Williams-Watts (KWW) stretched exponential:
+
+For certain rate distributions, this integral produces decay forms well-approximated by the Kohlrausch-Williams-Watts (KWW) stretched exponential:
 \begin{equation}
-C(d) = C_0 \cdot \exp\left[-\left(\frac{d}{\tau}\right)^\beta\right] \quad \text{where } 0 < \beta \leq 1
+C(d) \approx C_0 \cdot \exp\left[-\left(\frac{d}{\tau}\right)^\beta\right] \quad \text{where } 0 < \beta \leq 1
 \end{equation}
 
-The stretching exponent $\beta$ encodes environmental heterogeneity: $\beta = 1$ corresponds to homogeneous Markovian dephasing; $0.5 < \beta < 1$ indicates heterogeneous or non-Markovian decoherence with distributed character (quantitative predictions yield $\beta \approx 0.7$--$0.9$ in certain radical pair regimes); linear decay is consistent with classical artifacts.
-
-\textbf{Proposed refinement.} Fit three models (linear, exponential, stretched exponential) using AIC or BIC for model selection. A stretched exponential with $\beta \in [0.6, 1.0]$ would be classified as ``quantum-consistent.''
+The stretching exponent $\beta$ encodes environmental heterogeneity: $\beta = 1$ corresponds to a narrow rate distribution (quasi-homogeneous); $0.5 < \beta < 1$ indicates heterogeneous decoherence environments typical of protein-embedded radical pairs. Note that stretched exponentials also arise in classical disordered systems (polymer relaxation, dielectric response), so detection of a stretched exponential is necessary but not sufficient for a quantum interpretation. The value of this diagnostic lies in its combination with the other stages, not in isolation.
 
 \subsection{Stage 6: Field-Strength Power Law (1 point)}
 
@@ -203,6 +206,19 @@ The stretching exponent $\beta$ encodes environmental heterogeneity: $\beta = 1$
 
 \textbf{Scoring.} 1 point if significant negative correlation detected.
 
+\subsection{Stage 8: RF Magnetic Field Disruption (2 points)}
+
+\textbf{Purpose.} Confirm radical pair involvement via resonant disruption of spin dynamics. Application of a weak radiofrequency (RF) magnetic field at the Larmor frequency should disrupt singlet-triplet interconversion in radical pairs, reducing the observed magnetic field effect~\cite{hore2016}. This is widely regarded as one of the strongest diagnostics for radical pair involvement because no classical magnetic effect is disrupted by a weak RF field at a specific resonance frequency.
+
+\textbf{Method.} Measure differential contrast (Stage~2 protocol) under three conditions: (1)~static field only (baseline), (2)~static field + RF at the Larmor frequency $\nu_L = \gamma_e B / 2\pi$, and (3)~static field + RF at a non-resonant frequency (control). Compute the RF suppression ratio:
+\begin{equation}
+S_\text{RF} = 1 - \frac{C_\text{RF}}{C_\text{baseline}}
+\end{equation}
+
+\textbf{Decision.} $S_\text{RF} > 0.2$ at the Larmor frequency AND $S_\text{RF} < 0.05$ at the non-resonant frequency for strong detection. The frequency specificity is the key discriminator: classical effects are suppressed equally at all RF frequencies, while radical pair effects show resonant suppression.
+
+\textbf{Scoring.} 2 points if resonant suppression detected with frequency specificity. 1 point if suppression detected but frequency specificity is marginal.
+
 \section{Scoring and Verdict}
 
 \subsection{Score Allocation}
@@ -217,22 +233,27 @@ Stage & Test & Max points \\
 2 & Differential signal detection & 2 \\
 3 & Negative controls (GATE) & 2 \\
 4 & Fourier angular shape & 2 \\
-5 & Noise decay fingerprint (ZNE) & 1 \\
+5 & Decoherence decay shape & 1 \\
 6 & Field-strength power law & 1 \\
 7 & Temperature coherence scaling & 1 \\
+8 & RF magnetic field disruption & 2 \\
 \hline
-& \textbf{Total} & \textbf{10} \\
+& \textbf{Total} & \textbf{12} \\
 \end{tabular}
 \end{ruledtabular}
 \end{table}
 
 \subsection{Verdict Thresholds}
 
-$\geq 8/10$: Consistent with quantum spin coherence. $\geq 6/10$: Strong evidence--recommend independent replication. $\geq 4/10$: Suggestive--additional data needed. $< 4/10$: No detection.
+$\geq 10/12$: Consistent with quantum spin coherence. $\geq 8/12$: Strong evidence--recommend independent replication. $\geq 5/12$: Suggestive--additional data needed. $< 5/12$: No detection.
+
+\subsection{Scoring Weight Rationale}
+
+Stages are weighted by diagnostic specificity--the degree to which a positive result is uniquely attributable to radical pair quantum coherence rather than classical alternatives. Stages 2, 3, 4, and 8 receive 2 points each because they test properties with high specificity: angular dependence with $5\sigma$ significance (Stage~2), artifact elimination via controls (Stage~3), the characteristic $\cos^2\theta$ Fourier signature (Stage~4), and frequency-specific RF disruption (Stage~8). Stages 1, 5, 6, and 7 receive 1 point each because they test properties that, while consistent with quantum coherence, can also arise from classical mechanisms (noise characterization, non-linear decay, power-law scaling, temperature sensitivity). This weighting ensures that a system cannot reach a positive verdict on low-specificity stages alone.
 
 \subsection{Stage Independence}
 
-Stages 1--4 provide substantially independent lines of evidence. Stages 5--7 are partially correlated: temperature (Stage~7) affects decoherence rates (Stage~5), and decoherence affects field-scaling behavior (Stage~6). The scoring weights reflect this asymmetry: Stages 1--4 carry 7 of 10 points, while Stages 5--7 carry 3 points combined.
+Stages 1--4 and 8 provide substantially independent lines of evidence. Stages 5--7 are partially correlated: temperature (Stage~7) affects decoherence rates (Stage~5), and decoherence affects field-scaling behavior (Stage~6). The scoring weights reflect this: the five high-independence stages carry 9 of 12 points, while the three correlated stages carry 3 points combined.
 
 \subsection{Control Gate}
 
@@ -259,10 +280,10 @@ Simulations include five realistic noise sources: Poisson shot noise, LED intens
 \subsection{Results}
 
 \begin{table}[h]
-\caption{QDP-1 simulation results (representative run).}
+\caption{QDP-1 simulation results (Stages 1--7 only; representative run). Stage~8 (RF disruption) is not included in the simulation and would require experimental validation.}
 \begin{ruledtabular}
 \begin{tabular}{lrl}
-System & Score & Verdict \\
+System & Score (of 10) & Verdict \\
 \hline
 Avian Cryptochrome Cry4a & 7/10 & Strong evidence \\
 Flavin-Tryptophan Model & 5/10 & Suggestive \\
@@ -273,7 +294,7 @@ Rhodamine B (Control) & 3--4/10 & No detection \\
 \end{ruledtabular}
 \end{table}
 
-Key observations: (1)~Stage~2 cleanly separates RP from non-RP systems ($Z = 17.8$--$95.0$ for candidates vs.\ $Z = 0.4$ for control). (2)~The negative control scores at the bottom (3--4/10). (3)~Stage~5 (ZNE diagnostic) scores 0/1 for all systems--the decoherence proxy does not produce the expected exponential decay. (4)~Scores vary $\pm 1$--$2$ points between runs due to stochastic noise.
+Key observations: (1)~Stage~2 cleanly separates RP from non-RP systems ($Z = 17.8$--$95.0$ for candidates vs.\ $Z = 0.4$ for control). (2)~The negative control scores at the bottom (3--4/10). (3)~Stage~5 (decoherence decay shape) scores 0/1 for all systems--the simulation's linear decoherence proxy produces linear decay, which is consistent with the corrected theoretical prediction that Lorentzian and linear forms converge in the small-perturbation regime (see Sec.~III\,E\,1). Distinguishing quantum from classical decay requires perturbations large enough to enter the non-linear regime, which the simulation does not model. (4)~Scores vary $\pm 1$--$2$ points between runs due to stochastic noise. (5)~Stage~8 (RF disruption) is not simulated; it requires physical spin dynamics and RF field modeling beyond the scope of this simulation.
 
 \subsection{Simulation Limitations}
 
@@ -285,9 +306,13 @@ The simulation uses a simplified decoherence model: linear field-ratio reduction
 
 QDP-1 sits at the intersection of quantum computing (ZNE), spin chemistry (radical pair detection), and signal processing (Fourier analysis), importing methodology from particle physics and clinical trials. The contribution is the assembly, not new measurement physics.
 
-\subsection{The ZNE Adaptation: Status and Limitations}
+\subsection{The Decoherence Diagnostic: Status and Limitations}
 
-The proposed use of ZNE as a diagnostic rather than an error-mitigation tool is QDP-1's most novel element--and its least validated. Stage~5 scores 0/1 across all systems in simulation. Three concerns persist: (1)~many classical processes also produce exponential decay; (2)~deliberate decoherence perturbation may alter chemistry, not just spin coherence; (3)~the theoretical basis, while grounded in Lindblad dynamics (Sec.~III\,E\,1), requires validation against full spin-dynamical simulations and experiment.
+Stage~5 adapts the principle of deliberate noise amplification from ZNE in quantum computing, but the transfer is not straightforward. In quantum circuits, noise can be amplified precisely via gate stretching with a known scaling factor. In biological radical pair systems, ``increasing decoherence'' via paramagnetic ions or temperature changes may simultaneously alter reaction kinetics, protein conformation, and radical pair lifetime. The corrected theoretical analysis (Sec.~III\,E\,1) shows that the coherent contribution to the signal decays as a Lorentzian function of the decoherence parameter, which converges to linear decay in the small-perturbation limit--making it indistinguishable from classical artifacts unless the perturbation is large enough to enter the non-linear regime. Stage~5 scores 0/1 across all systems in simulation, which is consistent with this analysis: the simulation uses a linear decoherence proxy that does not reach the non-linear regime. Experimental validation with physical decoherence mechanisms (paramagnetic quenching at concentrations spanning at least one order of magnitude) is required to determine whether the non-linear regime is practically accessible.
+
+\subsection{False Positive Analysis}
+
+A key question for any detection framework is: what is the probability that a purely classical system achieves a positive verdict? In the current simulation, the negative control (Rhodamine~B) scores 3--4/10 on Stages 1--7, with $\pm 1$--$2$ point run-to-run variability. Under the revised 12-point scale, a classical system that passes Stage~1 (noise quality, likely) and accumulates points from Stages 5--7 (which can score on classical signals) could reach 3--4/12 before Stage~8. Stage~8 (RF disruption) provides a strong barrier: no classical magnetic effect shows frequency-specific RF suppression, so a classical system should score 0/2 on Stage~8. The combined effect of the control gate (Stage~3) and the RF disruption test (Stage~8) means that a classical system reaching the ``suggestive'' threshold of 5/12 would require both: passing controls AND scoring on multiple low-specificity stages simultaneously. A formal false positive rate calculation requires Monte Carlo simulation under realistic classical null models, which is beyond the scope of this work but is a priority for future validation.
 
 \subsection{Practical Application}
 
@@ -305,23 +330,21 @@ If validated experimentally, QDP-1 enables: quantum biology surveys across crypt
 \item \textbf{Uncalibrated scoring weights.} Need empirical validation.
 \item \textbf{Partial stage correlation.} Stages 5--7 are correlated.
 \item \textbf{Scope limitation.} Radical pair systems only.
-\item \textbf{Exponential decay caveat.} Not sufficient alone.
-\item \textbf{Missing standard tests.} RF disruption, isotope substitution, EPR not included.
+\item \textbf{Non-linear decay caveat.} Not sufficient alone; classical processes can also produce non-linear decay.
+\item \textbf{Missing standard tests.} Isotope substitution and EPR not included in the core protocol (proposed as extensions).
 \item \textbf{Stage 4 false positives.} Fourier test can score on noise-only data.
 \item \textbf{Run-to-run variability.} $\pm 1$--$2$ points between runs.
 \end{enumerate}
 
 \section{Proposed Extensions}
 
-\textbf{Stage 8: RF Magnetic Field Disruption.} RF at the Larmor frequency should disrupt singlet-triplet interconversion~\cite{hore2016}.
+\textbf{Stage 9: Magnetic Isotope Substitution.} Replacing magnetic nuclei ($^1$H $\to$ $^2$H, $^{12}$C $\to$ $^{13}$C) alters hyperfine coupling predictably. Like RF disruption (Stage~8), this test has high specificity for radical pair involvement because no classical magnetic effect depends on nuclear spin.
 
-\textbf{Stage 9: Magnetic Isotope Substitution.} Replacing magnetic nuclei ($^1$H $\to$ $^2$H, $^{12}$C $\to$ $^{13}$C) alters hyperfine coupling predictably.
-
-\textbf{Stage 10: Direct Radical Characterization via EPR/Transient Absorption.} Time-resolved EPR confirms radical identity.
+\textbf{Stage 10: Direct Radical Characterization via EPR/Transient Absorption.} Time-resolved EPR confirms radical identity and provides direct observation of the spin-correlated radical pair.
 
 \section{Conclusion}
 
-QDP-1 provides a structured, reproducible framework for evaluating quantum spin coherence signatures in radical pair systems. Its primary contribution is formalizing multi-stage evidence accumulation with control gating--a standardization that does not currently exist in the field. The proposed ZNE diagnostic represents a speculative but potentially valuable cross-disciplinary transfer requiring further validation.
+QDP-1 provides a structured, reproducible framework for evaluating quantum spin coherence signatures in radical pair systems. Its primary contribution is formalizing multi-stage evidence accumulation with control gating and RF disruption testing--a standardization that does not currently exist in the field. The decoherence decay diagnostic (Stage~5) represents a speculative but potentially valuable cross-disciplinary transfer from quantum computing, requiring experimental validation to determine whether the non-linear Lorentzian regime is practically accessible in biological systems.
 
 QDP-1 is a methodological proposal--a structured starting point for standardization--not a battle-tested detection kit. Its value will be determined by experimental validation, integration with established techniques, and collaborative stress-testing by the spin chemistry and quantum biology communities.
 
