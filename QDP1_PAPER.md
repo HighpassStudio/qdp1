@@ -17,7 +17,7 @@ We propose QDP-1, a seven-stage detection protocol for identifying quantum spin 
 
 ## 1. Introduction
 
-The radical pair mechanism is the leading candidate explanation for biological magnetoreception and has been confirmed in cryptochrome systems through fluorescence-detected magnetic field effects [1], Earth-strength magnetic sensitivity in tightly bound radical pairs [2], and direct observation of long-lived flavin/tryptophan radical pairs [3]. Experimental techniques for detecting radical pair quantum effects have matured considerably: magneto-fluorescence fluctuation microspectroscopy enables investigation of quantum effects in biology at the single-molecule scale [4], and sensing magnetic-field effects at the scale of small molecular ensembles is now achievable [5].
+The radical pair mechanism is the leading candidate explanation for biological magnetoreception and has been confirmed in cryptochrome systems through fluorescence-detected magnetic field effects [1] and Earth-strength magnetic sensitivity in tightly bound radical pairs [2]. Experimental techniques for detecting radical pair quantum effects have matured considerably: magneto-fluorescence fluctuation microspectroscopy enables investigation of quantum effects in biology at the single-molecule scale [3], and sensing magnetic-field effects at the scale of small molecular ensembles is now achievable [4].
 
 Despite this progress, the field lacks a unified detection framework. Individual techniques — fluorescence-based magnetic field effect measurement, angular dependence characterization, B_1/2 field-strength analysis, temperature-dependent coherence studies — are applied independently and evaluated by different criteria across different laboratories. This creates several problems:
 
@@ -25,7 +25,7 @@ Despite this progress, the field lacks a unified detection framework. Individual
 
 2. **No control gating.** Negative controls are used, but there is no formal mechanism to prevent false positives from propagating when controls show contamination.
 
-3. **No cross-disciplinary diagnostic transfer.** Zero-noise extrapolation (ZNE), a technique developed for quantum computing error mitigation [6,7], provides a natural framework for probing quantum coherence effects through deliberate noise scaling. This approach has begun migrating from quantum computing into quantum sensing [8] but has not been applied to quantum biology or radical pair systems.
+3. **No cross-disciplinary diagnostic transfer.** Zero-noise extrapolation (ZNE), a technique developed for quantum computing error mitigation [5,6], provides a natural framework for probing quantum coherence effects through deliberate noise scaling. This approach has begun migrating from quantum computing into quantum sensing [7] but has not been applied to quantum biology or radical pair systems.
 
 4. **No system-agnostic protocol.** Each new radical pair candidate is evaluated with ad hoc methods. A reusable detection kit would accelerate the field.
 
@@ -41,19 +41,19 @@ QDP-1 detects signatures *consistent with* quantum spin coherence in radical pai
 
 ### 2.1 Radical Pair Detection Methods
 
-The radical pair mechanism and its role in biological magnetoreception have been extensively reviewed [9,10]. Key experimental milestones include the detection of magnetic field effects on cryptochrome fluorescence [1], characterization of angular dependence in singlet yield [11], measurement of B_1/2 parameters for field-strength characterization [12], and investigation of temperature effects on spin coherence [13]. These techniques are individually well-established and are not claimed as novel contributions of this work.
+The radical pair mechanism and its role in biological magnetoreception have been extensively reviewed [8,9]. Key experimental milestones include the detection of magnetic field effects on cryptochrome fluorescence [1], characterization of angular dependence in singlet yield [10], measurement of B_1/2 parameters for field-strength characterization [11], and investigation of temperature effects on spin coherence [12]. These techniques are individually well-established and are not claimed as novel contributions of this work.
 
 ### 2.2 Zero-Noise Extrapolation in Quantum Computing
 
-ZNE was introduced as an error-mitigation technique for near-term quantum computers [6,7]. The core idea is to deliberately amplify noise, measure the observable at multiple noise levels, and extrapolate to the zero-noise limit. ZNE is now standard practice in quantum computing and has begun migrating into quantum sensing — notably, a 2024 study applied ZNE-style extrapolation to mitigate errors in DC magnetometry [8]. However, the use of ZNE as a *diagnostic* (to distinguish quantum from classical behavior based on decay curve shape) rather than as an error-mitigation tool, and its application to biological or chemical radical pair systems, does not appear in the mainstream literature.
+ZNE was introduced as an error-mitigation technique for near-term quantum computers [5,6]. The core idea is to deliberately amplify noise, measure the observable at multiple noise levels, and extrapolate to the zero-noise limit. ZNE is now standard practice in quantum computing and has begun migrating into quantum sensing — notably, a 2024 study applied ZNE-style extrapolation to mitigate errors in DC magnetometry [7]. However, the use of ZNE as a *diagnostic* (to distinguish quantum from classical behavior based on decay curve shape) rather than as an error-mitigation tool, and its application to biological or chemical radical pair systems, does not appear in the mainstream literature.
 
 ### 2.3 The Quantum Biology Detection Gap
 
-The question "How quantum is radical pair magnetoreception?" has been addressed theoretically [14], establishing that radical pair magnetoreception satisfies formal criteria for quantum behavior from a quantum information perspective. However, this assessment is conceptual, not operational — it does not provide a staged detection protocol for experimental use.
+The question "How quantum is radical pair magnetoreception?" has been addressed theoretically [13], establishing that radical pair magnetoreception satisfies formal criteria for quantum behavior from a quantum information perspective. However, this assessment is conceptual, not operational — it does not provide a staged detection protocol for experimental use.
 
-The most relevant methodological advances are the 2024 magneto-fluorescence fluctuation microspectroscopy technique [4] and the 2024 study on sensing magnetic-field effects at small ensemble scales [5]. Both move toward reusable measurement methodology for quantum biology, but neither constitutes a multi-stage scored framework with control gating and cross-disciplinary diagnostic integration.
+The most relevant methodological advances are the 2024 magneto-fluorescence fluctuation microspectroscopy technique [3] and the 2019 study on sensing magnetic-field effects at small ensemble scales [4]. Both move toward reusable measurement methodology for quantum biology, but neither constitutes a multi-stage scored framework with control gating and cross-disciplinary diagnostic integration.
 
-A 2024 study on simulating spin biology using a digital quantum computer [15] represents the most direct bridge between quantum computing and quantum biology in the existing literature. However, the connection there is different: the paper uses extrapolation ideas akin to ZNE for simulation accuracy, not as an experimental diagnostic for biological systems.
+A 2024 study on simulating spin biology using a digital quantum computer [14] represents the most direct bridge between quantum computing and quantum biology in the existing literature. However, the connection there is different: the paper uses extrapolation ideas akin to ZNE for simulation accuracy, not as an experimental diagnostic for biological systems.
 
 ### 2.4 Novelty Claim
 
@@ -141,7 +141,7 @@ Since cos²θ = 0.5 + 0.5·cos(2θ), the radical pair signal concentrates power 
     Linear:      C(d) = a − b·d           (R²_lin)
     Exponential: C(d) = a · exp(−k·d)     (R²_exp)
 
-**Rationale.** This adapts zero-noise extrapolation (ZNE) from quantum computing [6,7]. In standard ZNE, noise is deliberately amplified and the observable extrapolated to zero noise to mitigate errors. Here, we repurpose the technique as a *diagnostic*: the shape of the decay curve under increasing decoherence distinguishes quantum from classical behavior. Quantum spin coherence effects typically produce non-linear (exponential-like) decay under increasing decoherence, reflecting the exponential sensitivity of coherent superposition to environmental noise. Many classical artifacts (e.g., linear detector drift, proportional field coupling) produce linear decay.
+**Rationale.** This adapts zero-noise extrapolation (ZNE) from quantum computing [5,6]. In standard ZNE, noise is deliberately amplified and the observable extrapolated to zero noise to mitigate errors. Here, we repurpose the technique as a *diagnostic*: the shape of the decay curve under increasing decoherence distinguishes quantum from classical behavior. Quantum spin coherence effects typically produce non-linear (exponential-like) decay under increasing decoherence, reflecting the exponential sensitivity of coherent superposition to environmental noise. Many classical artifacts (e.g., linear detector drift, proportional field coupling) produce linear decay.
 
 **Important caveat.** Exponential decay alone is not proof of quantum coherence. Some classical processes (photobleaching, thermal relaxation, chemical decay) also produce exponential decay. This stage provides supporting evidence within the multi-stage framework, not standalone proof. The scoring weight (1 point of 10) reflects this limitation.
 
@@ -213,7 +213,7 @@ This refinement is more physically grounded for real radical pair systems, where
 
     log(C) = α · log(B) + β
 
-**Rationale.** Quantum radical pair theory predicts that the magnetic field effect scales approximately linearly with field strength (α ≈ 1) at weak fields below the hyperfine coupling strength, saturating at stronger fields [12]. Classical diamagnetic or paramagnetic effects scale quadratically (α ≈ 2). The Lorentzian B_1/2 characterization used in existing literature captures field dependence but requires fitting to a specific spin-chemical model. The power-law test is model-free.
+**Rationale.** Quantum radical pair theory predicts that the magnetic field effect scales approximately linearly with field strength (α ≈ 1) at weak fields below the hyperfine coupling strength, saturating at stronger fields [11]. Classical diamagnetic or paramagnetic effects scale quadratically (α ≈ 2). The Lorentzian B_1/2 characterization used in existing literature captures field dependence but requires fitting to a specific spin-chemical model. The power-law test is model-free.
 
 **Decision.** α < 1.5 indicates quantum-consistent scaling.
 
@@ -351,7 +351,7 @@ There are additional concerns with the exponential-vs-linear classifier:
 
 3. **The theoretical basis needs strengthening.** A derivation from spin dynamics showing why quantum spin coherence in radical pairs should produce a specific decay functional form under controlled decoherence — distinct from classical alternatives — would substantially strengthen this stage.
 
-Despite these limitations, the *concept* of repurposing noise-scaling techniques from quantum computing as diagnostics for quantum biology remains promising. ZNE has already migrated from quantum computing into quantum sensing [8]; extending it to quantum biology is a natural next step. Stage 5 should be treated as a proposed diagnostic awaiting theoretical grounding and experimental validation, not as a proven technique. Its scoring weight (1 point of 10) reflects this provisional status.
+Despite these limitations, the *concept* of repurposing noise-scaling techniques from quantum computing as diagnostics for quantum biology remains promising. ZNE has already migrated from quantum computing into quantum sensing [7]; extending it to quantum biology is a natural next step. Stage 5 should be treated as a proposed diagnostic awaiting theoretical grounding and experimental validation, not as a proven technique. Its scoring weight (1 point of 10) reflects this provisional status.
 
 ### 6.3 Practical Application
 
@@ -365,9 +365,9 @@ If QDP-1 validates experimentally and enables systematic scanning of radical pai
 
 **Quantum biology survey.** A standardized protocol allows direct comparison of quantum coherence signatures across systems — comparing avian, plant, and fungal cryptochromes under identical criteria, for example, or screening enzyme families for unexpected magnetosensitivity.
 
-**Pharmacological screening.** Some pharmaceuticals (notably lithium [16]) are hypothesized to affect radical pair dynamics. QDP-1 could provide a standardized test for radical pair involvement in drug mechanisms.
+**Pharmacological screening.** Some pharmaceuticals (notably lithium [15]) are hypothesized to affect radical pair dynamics. QDP-1 could provide a standardized test for radical pair involvement in drug mechanisms.
 
-**Oxidative stress and reactive oxygen species.** The radical pair mechanism governs aspects of cellular reactive oxygen species (ROS) production under magnetic field exposure [17]. Understanding which cellular processes are magnetically sensitive through radical pair mechanisms has implications for environmental electromagnetic exposure assessment.
+**Oxidative stress and reactive oxygen species.** The radical pair mechanism governs aspects of cellular reactive oxygen species (ROS) production under magnetic field exposure [16]. Understanding which cellular processes are magnetically sensitive through radical pair mechanisms has implications for environmental electromagnetic exposure assessment.
 
 ---
 
@@ -385,7 +385,7 @@ If QDP-1 validates experimentally and enables systematic scanning of radical pai
 
 6. **Exponential decay caveat.** Stage 5 cannot distinguish quantum decoherence from classical exponential processes (photobleaching, thermal decay) in isolation. Its value depends on the multi-stage context. This is by design — no single stage is intended to be conclusive.
 
-7. **Missing standard tests.** QDP-1 does not currently include several tests that are standard in the radical pair magnetoreception literature: radiofrequency (RF) magnetic field disruption (a key test for confirming radical pair involvement [9]), isotope substitution controls (replacing magnetic nuclei to alter hyperfine coupling), or electron paramagnetic resonance (EPR) validation. These could be incorporated as additional stages in future versions.
+7. **Missing standard tests.** QDP-1 does not currently include several tests that are standard in the radical pair magnetoreception literature: radiofrequency (RF) magnetic field disruption (a key test for confirming radical pair involvement [8]), isotope substitution controls (replacing magnetic nuclei to alter hyperfine coupling), or electron paramagnetic resonance (EPR) validation. These could be incorporated as additional stages in future versions.
 
 8. **Stage 4 false positive risk.** The Fourier power ratio criterion in Stage 4 can produce spurious scores on noise-only data (observed in the Rhodamine B negative control). This stage should be conditioned on Stage 2 passing first — if no differential signal exists, the angular shape test is meaningless. This gating refinement is planned for QDP-1.1.
 
@@ -397,7 +397,7 @@ If QDP-1 validates experimentally and enables systematic scanning of radical pai
 
 The following stages are not included in QDP-1 v1.0 but are standard tests in the radical pair literature and should be incorporated in future versions:
 
-**Stage 8 (proposed): RF Magnetic Field Disruption.** Application of a weak radiofrequency magnetic field at the Larmor frequency should disrupt singlet-triplet interconversion in radical pairs, reducing the observed magnetic field effect [9]. This is one of the strongest diagnostic tests for radical pair involvement. A system that passes Stages 1–4 but shows no RF sensitivity would cast doubt on a radical pair interpretation.
+**Stage 8 (proposed): RF Magnetic Field Disruption.** Application of a weak radiofrequency magnetic field at the Larmor frequency should disrupt singlet-triplet interconversion in radical pairs, reducing the observed magnetic field effect [8]. This is one of the strongest diagnostic tests for radical pair involvement. A system that passes Stages 1–4 but shows no RF sensitivity would cast doubt on a radical pair interpretation.
 
 **Stage 9 (proposed): Magnetic Isotope Substitution.** Replacing magnetic nuclei (e.g., ¹H → ²H, ¹²C → ¹³C) alters the hyperfine coupling and should change the angular dependence and field sensitivity in a predictable way. Agreement between predicted and observed isotope effects would provide strong evidence for spin-correlated radical pair involvement.
 
@@ -423,35 +423,33 @@ We invite collaboration from experimental groups working with radical pair syste
 
 [2] Xu, J., et al. (2021). Magnetic sensitivity of cryptochrome 4 from a migratory songbird. *Nature*, 594, 535–540.
 
-[3] Wedge, C. J., et al. (2025). Direct observation of a long-lived flavin/tryptophan radical pair in cryptochrome. *Communications Chemistry*, 8, 45.
+[3] Antill, L. M., et al. (2025). Introduction of magneto-fluorescence fluctuation microspectroscopy for investigating quantum effects in biology. *Nature Photonics*, 19, 178–186.
 
-[4] Lindner, S., et al. (2024). Magneto-fluorescence fluctuation microspectroscopy for investigating quantum effects in biology. *Nature Photonics*, 19, 177–183.
+[4] Kerpal, C., et al. (2019). Chemical compass behaviour at microtesla magnetic fields strengthens the radical pair hypothesis of avian magnetoreception. *Nature Communications*, 10, 3707.
 
-[5] Kerpal, C., et al. (2019). Chemical compass behaviour at microtesla magnetic fields strengthens the radical pair hypothesis of avian magnetoreception. *Nature Communications*, 10, 3707.
+[5] Temme, K., Bravyi, S., & Gambetta, J. M. (2017). Error mitigation for short-depth quantum circuits. *Physical Review Letters*, 119, 180509.
 
-[6] Temme, K., Bravyi, S., & Gambetta, J. M. (2017). Error mitigation for short-depth quantum circuits. *Physical Review Letters*, 119, 180509.
+[6] Giurgica-Tiron, T., et al. (2020). Digital zero noise extrapolation for quantum error mitigation. *IEEE International Conference on Quantum Computing and Engineering*, 306–316.
 
-[7] Giurgica-Tiron, T., et al. (2020). Digital zero noise extrapolation for quantum error mitigation. *IEEE International Conference on Quantum Computing and Engineering*, 306–316.
+[7] Van Dyke, J. S., White, Z., & Quiroz, G. (2024). Mitigating errors in DC magnetometry via zero-noise extrapolation. *Physical Review Applied*, 22, 024062. arXiv:2402.16949.
 
-[8] Van Dyke, J. S., White, Z., & Quiroz, G. (2024). Mitigating errors in DC magnetometry via zero-noise extrapolation. *Physical Review Applied*, 22, 024062. arXiv:2402.16949.
+[8] Hore, P. J., & Mouritsen, H. (2016). The radical-pair mechanism of magnetoreception. *Annual Review of Biophysics*, 45, 299–344.
 
-[9] Hore, P. J., & Mouritsen, H. (2016). The radical-pair mechanism of magnetoreception. *Annual Review of Biophysics*, 45, 299–344.
+[9] Wong, S. Y., Benjamin, P., & Hore, P. J. (2023). Magnetic field effects on radical pair reactions: estimation of B_1/2 for flavin-tryptophan radical pairs in cryptochromes. *Physical Chemistry Chemical Physics*, 25, 975–982. DOI: 10.1039/D2CP03793A.
 
-[10] Bradlaugh, A. A., et al. (2023). Magnetic field effects on radical pair reactions: estimation of B_1/2 for flavin-tryptophan radical pairs in cryptochromes. *Physical Chemistry Chemical Physics*, 25, 3468–3477. DOI: 10.1039/D2CP03793A.
+[10] Ritz, T., et al. (2000). A model for photoreceptor-based magnetoreception in birds. *Biophysical Journal*, 78(2), 707–718.
 
-[11] Ritz, T., et al. (2000). A model for photoreceptor-based magnetoreception in birds. *Biophysical Journal*, 78(2), 707–718.
+[11] Timmel, C. R., et al. (1998). Effects of weak magnetic fields on free radical recombination reactions. *Molecular Physics*, 95(1), 71–89.
 
-[12] Timmel, C. R., et al. (1998). Effects of weak magnetic fields on free radical recombination reactions. *Molecular Physics*, 95(1), 71–89.
+[12] Dodson, C. A., et al. (2015). Fluorescence-detected magnetic field effects on radical pair reactions from femtolitre volumes. *Chemical Communications*, 51, 8023–8026.
 
-[13] Dodson, C. A., et al. (2013). Fluorescence-detected magnetic field effects on radical pair reactions from femtolitre volumes. *Chemical Communications*, 49, 1732–1734.
+[13] Fay, T. P., Lindoy, L. P., Manolopoulos, D. E., & Hore, P. J. (2020). How quantum is radical pair magnetoreception? *Faraday Discussions*, 221, 77–91.
 
-[14] Cai, J., Guerreschi, G. G., & Briegel, H. J. (2020). How quantum is radical pair magnetoreception? *Faraday Discussions*.
+[14] Alvarez, P. H., et al. (2024). Simulating spin biology using a digital quantum computer. *APL Quantum*, 1, 036114.
 
-[15] Chee, J., et al. (2024). Simulating spin biology using a digital quantum computer. *APL Quantum*, 1, 036117.
+[15] Zadeh-Haghighi, H., & Simon, C. (2022). Radical pairs can explain magnetic field and lithium effects on the circadian clock. *Scientific Reports*, 12, 269.
 
-[16] Zadeh-Haghighi, H., & Simon, C. (2021). Radical pairs can explain magnetic field and lithium effects on the circadian clock. *Scientific Reports*, 12, 269.
-
-[17] Hore, P. J. (2025). Magneto-oncology: A radical pair primer. *Frontiers in Oncology*, 15, 1539718. DOI: 10.3389/fonc.2025.1539718.
+[16] Hore, P. J. (2025). Magneto-oncology: A radical pair primer. *Frontiers in Oncology*, 15, 1539718. DOI: 10.3389/fonc.2025.1539718.
 
 ---
 

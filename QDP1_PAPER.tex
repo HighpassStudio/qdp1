@@ -24,7 +24,7 @@ We propose QDP-1, a seven-stage detection protocol for identifying quantum spin 
 
 \section{Introduction}
 
-The radical pair mechanism is the leading candidate explanation for biological magnetoreception and has been confirmed in cryptochrome systems through fluorescence-detected magnetic field effects~\cite{maeda2012}, Earth-strength magnetic sensitivity in tightly bound radical pairs~\cite{xu2021}, and direct observation of long-lived flavin/tryptophan radical pairs~\cite{wedge2025}. Experimental techniques for detecting radical pair quantum effects have matured considerably: magneto-fluorescence fluctuation microspectroscopy enables investigation of quantum effects in biology at the single-molecule scale~\cite{lindner2024}, and sensing magnetic-field effects at the scale of small molecular ensembles is now achievable~\cite{kerpal2019}.
+The radical pair mechanism is the leading candidate explanation for biological magnetoreception and has been confirmed in cryptochrome systems through fluorescence-detected magnetic field effects~\cite{maeda2012} and Earth-strength magnetic sensitivity in tightly bound radical pairs~\cite{xu2021}. Experimental techniques for detecting radical pair quantum effects have matured considerably: magneto-fluorescence fluctuation microspectroscopy enables investigation of quantum effects in biology at the single-molecule scale~\cite{antill2025}, and sensing magnetic-field effects at the scale of small molecular ensembles is now achievable~\cite{kerpal2019}.
 
 Despite this progress, the field lacks a unified detection framework. Individual techniques---fluorescence-based magnetic field effect measurement, angular dependence characterization, $B_{1/2}$ field-strength analysis, temperature-dependent coherence studies---are applied independently and evaluated by different criteria across different laboratories. This creates several problems:
 
@@ -48,7 +48,7 @@ QDP-1 detects signatures \emph{consistent with} quantum spin coherence in radica
 
 \subsection{Radical Pair Detection Methods}
 
-The radical pair mechanism and its role in biological magnetoreception have been extensively reviewed~\cite{hore2016,bradlaugh2023}. Key experimental milestones include the detection of magnetic field effects on cryptochrome fluorescence~\cite{maeda2012}, characterization of angular dependence in singlet yield~\cite{ritz2000}, measurement of $B_{1/2}$ parameters for field-strength characterization~\cite{timmel1998}, and investigation of temperature effects on spin coherence~\cite{dodson2013}. These techniques are individually well-established and are not claimed as novel contributions of this work.
+The radical pair mechanism and its role in biological magnetoreception have been extensively reviewed~\cite{hore2016,wong2023}. Key experimental milestones include the detection of magnetic field effects on cryptochrome fluorescence~\cite{maeda2012}, characterization of angular dependence in singlet yield~\cite{ritz2000}, measurement of $B_{1/2}$ parameters for field-strength characterization~\cite{timmel1998}, and investigation of temperature effects on spin coherence~\cite{dodson2015}. These techniques are individually well-established and are not claimed as novel contributions of this work.
 
 \subsection{Zero-Noise Extrapolation in Quantum Computing}
 
@@ -56,11 +56,11 @@ ZNE was introduced as an error-mitigation technique for near-term quantum comput
 
 \subsection{The Quantum Biology Detection Gap}
 
-The question ``How quantum is radical pair magnetoreception?'' has been addressed theoretically~\cite{cai2020}, establishing that radical pair magnetoreception satisfies formal criteria for quantum behavior from a quantum information perspective. However, this assessment is conceptual, not operational---it does not provide a staged detection protocol for experimental use.
+The question ``How quantum is radical pair magnetoreception?'' has been addressed theoretically~\cite{fay2020}, establishing that radical pair magnetoreception satisfies formal criteria for quantum behavior from a quantum information perspective. However, this assessment is conceptual, not operational---it does not provide a staged detection protocol for experimental use.
 
-The most relevant methodological advances are the 2024 magneto-fluorescence fluctuation microspectroscopy technique~\cite{lindner2024} and the study on sensing magnetic-field effects at small ensemble scales~\cite{kerpal2019}. Both move toward reusable measurement methodology for quantum biology, but neither constitutes a multi-stage scored framework with control gating and cross-disciplinary diagnostic integration.
+The most relevant methodological advances are the 2024 magneto-fluorescence fluctuation microspectroscopy technique~\cite{antill2025} and the study on sensing magnetic-field effects at small ensemble scales~\cite{kerpal2019}. Both move toward reusable measurement methodology for quantum biology, but neither constitutes a multi-stage scored framework with control gating and cross-disciplinary diagnostic integration.
 
-A 2024 study on simulating spin biology using a digital quantum computer~\cite{chee2024} represents the most direct bridge between quantum computing and quantum biology in the existing literature. However, the connection there is different: the paper uses extrapolation ideas akin to ZNE for simulation accuracy, not as an experimental diagnostic for biological systems.
+A 2024 study on simulating spin biology using a digital quantum computer~\cite{alvarez2024} represents the most direct bridge between quantum computing and quantum biology in the existing literature. However, the connection there is different: the paper uses extrapolation ideas akin to ZNE for simulation accuracy, not as an experimental diagnostic for biological systems.
 
 \subsection{Novelty Claim}
 
@@ -294,7 +294,7 @@ Equipment requirements for optical/magnetic components are modest (\$1,500--\$4,
 
 \subsection{Broader Implications}
 
-If validated experimentally, QDP-1 enables: quantum biology surveys across cryptochrome families, pharmacological screening for radical pair involvement~\cite{zadeh2021}, and investigation of radical pair mechanisms in oxidative stress and reactive oxygen species production~\cite{hore2025}.
+If validated experimentally, QDP-1 enables: quantum biology surveys across cryptochrome families, pharmacological screening for radical pair involvement~\cite{zadeh2022}, and investigation of radical pair mechanisms in oxidative stress and reactive oxygen species production~\cite{hore2025}.
 
 \section{Limitations}
 
@@ -330,7 +330,7 @@ We invite collaboration from experimental groups working with radical pair syste
 Simulation code and full paper are available at \url{https://github.com/HighpassStudio/qdp1}. This work benefited from AI-assisted analysis and literature review using Claude (Anthropic).
 \end{acknowledgments}
 
-\begin{thebibliography}{17}
+\begin{thebibliography}{16}
 
 \bibitem{maeda2012}
 K.~Maeda \emph{et al.}, Magnetically sensitive light-induced reactions in cryptochrome are consistent with its proposed role as a magnetoreceptor, \emph{PNAS} \textbf{109}, 4774 (2012).
@@ -338,11 +338,8 @@ K.~Maeda \emph{et al.}, Magnetically sensitive light-induced reactions in crypto
 \bibitem{xu2021}
 J.~Xu \emph{et al.}, Magnetic sensitivity of cryptochrome 4 from a migratory songbird, \emph{Nature} \textbf{594}, 535 (2021).
 
-\bibitem{wedge2025}
-C.~J.~Wedge \emph{et al.}, Direct observation of a long-lived flavin/tryptophan radical pair in cryptochrome, \emph{Commun.\ Chem.} \textbf{8}, 45 (2025).
-
-\bibitem{lindner2024}
-S.~Lindner \emph{et al.}, Magneto-fluorescence fluctuation microspectroscopy for investigating quantum effects in biology, \emph{Nat.\ Photonics} \textbf{19}, 177 (2024).
+\bibitem{antill2025}
+L.~M.~Antill \emph{et al.}, Introduction of magneto-fluorescence fluctuation microspectroscopy for investigating quantum effects in biology, \emph{Nat.\ Photonics} \textbf{19}, 178 (2025).
 
 \bibitem{kerpal2019}
 C.~Kerpal \emph{et al.}, Chemical compass behaviour at microtesla magnetic fields strengthens the radical pair hypothesis of avian magnetoreception, \emph{Nat.\ Commun.} \textbf{10}, 3707 (2019).
@@ -359,8 +356,8 @@ J.~S.~Van~Dyke, Z.~White, and G.~Quiroz, Mitigating errors in DC magnetometry vi
 \bibitem{hore2016}
 P.~J.~Hore and H.~Mouritsen, The radical-pair mechanism of magnetoreception, \emph{Annu.\ Rev.\ Biophys.} \textbf{45}, 299 (2016).
 
-\bibitem{bradlaugh2023}
-A.~A.~Bradlaugh \emph{et al.}, Magnetic field effects on radical pair reactions: estimation of $B_{1/2}$ for flavin-tryptophan radical pairs in cryptochromes, \emph{Phys.\ Chem.\ Chem.\ Phys.} \textbf{25}, 3468 (2023).
+\bibitem{wong2023}
+S.~Y.~Wong, P.~Benjamin, and P.~J.~Hore, Magnetic field effects on radical pair reactions: estimation of $B_{1/2}$ for flavin-tryptophan radical pairs in cryptochromes, \emph{Phys.\ Chem.\ Chem.\ Phys.} \textbf{25}, 975 (2023).
 
 \bibitem{ritz2000}
 T.~Ritz \emph{et al.}, A model for photoreceptor-based magnetoreception in birds, \emph{Biophys.\ J.} \textbf{78}, 707 (2000).
@@ -368,17 +365,17 @@ T.~Ritz \emph{et al.}, A model for photoreceptor-based magnetoreception in birds
 \bibitem{timmel1998}
 C.~R.~Timmel \emph{et al.}, Effects of weak magnetic fields on free radical recombination reactions, \emph{Mol.\ Phys.} \textbf{95}, 71 (1998).
 
-\bibitem{dodson2013}
-C.~A.~Dodson \emph{et al.}, Fluorescence-detected magnetic field effects on radical pair reactions from femtolitre volumes, \emph{Chem.\ Commun.} \textbf{49}, 1732 (2013).
+\bibitem{dodson2015}
+C.~A.~Dodson \emph{et al.}, Fluorescence-detected magnetic field effects on radical pair reactions from femtolitre volumes, \emph{Chem.\ Commun.} \textbf{51}, 8023 (2015).
 
-\bibitem{cai2020}
-J.~Cai, G.~G.~Guerreschi, and H.~J.~Briegel, How quantum is radical pair magnetoreception? \emph{Faraday Discuss.} (2020).
+\bibitem{fay2020}
+T.~P.~Fay, L.~P.~Lindoy, D.~E.~Manolopoulos, and P.~J.~Hore, How quantum is radical pair magnetoreception? \emph{Faraday Discuss.} \textbf{221}, 77 (2020).
 
-\bibitem{chee2024}
-J.~Chee \emph{et al.}, Simulating spin biology using a digital quantum computer, \emph{APL Quantum} \textbf{1}, 036117 (2024).
+\bibitem{alvarez2024}
+P.~H.~Alvarez \emph{et al.}, Simulating spin biology using a digital quantum computer, \emph{APL Quantum} \textbf{1}, 036114 (2024).
 
-\bibitem{zadeh2021}
-H.~Zadeh-Haghighi and C.~Simon, Radical pairs can explain magnetic field and lithium effects on the circadian clock, \emph{Sci.\ Rep.} \textbf{12}, 269 (2021).
+\bibitem{zadeh2022}
+H.~Zadeh-Haghighi and C.~Simon, Radical pairs can explain magnetic field and lithium effects on the circadian clock, \emph{Sci.\ Rep.} \textbf{12}, 269 (2022).
 
 \bibitem{hore2025}
 P.~J.~Hore, Magneto-oncology: A radical pair primer, \emph{Front.\ Oncol.} \textbf{15}, 1539718 (2025).
