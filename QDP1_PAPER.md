@@ -445,7 +445,7 @@ We invite collaboration from experimental groups working with radical pair syste
 
 [13] Fay, T. P., Lindoy, L. P., Manolopoulos, D. E., & Hore, P. J. (2020). How quantum is radical pair magnetoreception? *Faraday Discussions*, 221, 77–91. https://doi.org/10.1039/C9FD00049F
 
-[14] Alvarez, P. H., et al. (2024). Simulating spin biology using a digital quantum computer. *APL Quantum*, 1, 036114. https://doi.org/10.1063/5.0223973
+[14] Alvarez, P. H., et al. (2024). Simulating spin biology using a digital quantum computer. *APL Quantum*, 1, 036114. https://doi.org/10.1063/5.0213120
 
 [15] Zadeh-Haghighi, H., & Simon, C. (2022). Radical pairs can explain magnetic field and lithium effects on the circadian clock. *Scientific Reports*, 12, 269. https://doi.org/10.1038/s41598-021-04334-0
 
